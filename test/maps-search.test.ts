@@ -1,9 +1,9 @@
-import { config } from 'dotenv';
 import { describe } from '@jest/globals';
+import { Config } from '../src/providers/config';
 import { getPlaceAutocomplete } from '../src/maps-api';
 import { getAutoCompleteDetails } from '../src';
 
-config();
+const TOMTOM_API_KEY = Config.getTomTomApiKey();
 
 // These are end-to-end tests and need an api key
 describe('Tomtom Places E2E Tests', () => {
@@ -27,12 +27,12 @@ describe('Tomtom Places E2E Tests', () => {
 
   describe('getPlaceAutocomplete', () => {
     it('handles no results', async () => {
-      const res = await getPlaceAutocomplete(process.env.TOMTOM_API_KEY, 'asfasffasfasafsafs');
+      const res = await getPlaceAutocomplete(TOMTOM_API_KEY, 'asfasffasfasafsafs');
       expect(res).toStrictEqual([]);
     });
 
     it('handles error', async () => {
-      expect(getPlaceAutocomplete(process.env.TOMTOM_API_KEY, '')).rejects.toThrow();
+      expect(getPlaceAutocomplete(TOMTOM_API_KEY, '')).rejects.toThrow();
     });
   });
 });
