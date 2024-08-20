@@ -1,13 +1,13 @@
 import { config } from 'dotenv';
+import { valueOrDefault } from '../helpers';
 
-export interface Config {
-  getTomTomApiKey(): string;
+type Config = ReturnType<typeof ConfigProvider>;
+function ConfigProvider() {
+  config();
+  return {
+    tomTomApiKey: valueOrDefault(process.env.TOMTOM_API_KEY),
+    tomTomCountriesAllowed: valueOrDefault(process.env.TOMTOM_COUNTRIES_ALLOWED, 'AUS,AU')
+  };
 }
 
-config();
-
-export const Config: Config = {
-  getTomTomApiKey: (): string => {
-    return process.env.TOMTOM_API_KEY || '';
-  }
-};
+export const Config = ConfigProvider();
