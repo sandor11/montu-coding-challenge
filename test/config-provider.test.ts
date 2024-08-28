@@ -2,7 +2,7 @@ import { describe } from '@jest/globals';
 import { Config } from '../src/providers/config';
 
 // These are config loading tests
-describe('Tomtom Places E2E Tests', () => {
+describe('Test the correct configuration is correctly loaded', () => {
   describe('getTomTomApiKey', () => {
     it('loads the tom tom API Key', () => {
       expect(Config).toHaveProperty('tomTomApiKey');
