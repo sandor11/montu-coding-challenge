@@ -13,13 +13,13 @@ export type AddressSuggestion = {
   components: AddressComponents;
 };
 export type AddressSuggestions = Array<AddressSuggestion>;
-export type AddressAutoComplete = (address: PartialAddress) => Promise<AddressSuggestions>;
+export type AddressSearch = (address: PartialAddress) => Promise<AddressSuggestion[]>;
 
-// Type alias to allow a separation to what the library consumer see and the depndency
+// Type to allow a separation to what the library consumer see and the depndency
 // the third party API will see
 export type SearchAPI = (address: PartialAddress) => Promise<AddressComponents[]>;
 
-function configureAutoComplete(searchApi: SearchAPI): AddressAutoComplete {
+function configureAddressSearch(searchApi: SearchAPI): AddressSearch {
   return async (address: PartialAddress): Promise<AddressSuggestions> => {
     const searchResults = await searchApi(address).then((components) => components);
     return searchResults.map((components) => {
@@ -28,4 +28,4 @@ function configureAutoComplete(searchApi: SearchAPI): AddressAutoComplete {
   };
 }
 
-export const autoComplete = (searchApi: SearchAPI) => configureAutoComplete(searchApi);
+export const addressSearch = (searchApi: SearchAPI) => configureAddressSearch(searchApi);

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { AddressComponents, PartialAddress, SearchAPI } from '../lib/auto-complete';
+import { AddressComponents, PartialAddress, SearchAPI } from '../lib/address-search';
 import { valueOrDefault } from '../helpers';
 
 const SEARCH_LIMIT = 100;
