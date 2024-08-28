@@ -33,5 +33,6 @@ describe('Test the address search component', () => {
     expect(firstComponents).toHaveProperty('country');
     expect(firstComponents).toHaveProperty('freeformAddress');
     expect(firstComponents).toHaveProperty('municipality');
+    expect(firstComponents).toMatchObject(addressComponents);
   });
 });
