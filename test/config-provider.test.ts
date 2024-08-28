@@ -10,6 +10,10 @@ describe('Test the correct configuration is correctly loaded', () => {
       const apiKey = Config.tomTomApiKey;
       expect(apiKey).toBeDefined();
       expect(apiKey).not.toBe('');
+
+      const allowedCountries = Config.tomTomCountriesAllowed;
+      expect(allowedCountries).toBeDefined();
+      expect(allowedCountries).toBe('AU,AUS');
     });
   });
 });
