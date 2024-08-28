@@ -9,7 +9,6 @@ function getWithUndefined(): OptionalProperty {
   return {};
 }
 
-// These are config loading tests
 describe('Test helper function', () => {
   describe('valueOrDefault', () => {
     it('gives back the value when supplied', () => {
