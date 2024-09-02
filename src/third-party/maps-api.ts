@@ -34,7 +34,7 @@ export type TomTomAPIResponse = AxiosResponse<{
 
 // ensure the returned API result conforms to the expected contract required
 // by the library internally to produce a meaningful suggestion
-export function validResult(result: TomTomAPIResult): boolean {
+function validResult(result: TomTomAPIResult): boolean {
   return (
     result.hasOwnProperty('id') &&
     result.hasOwnProperty('address') &&
@@ -43,7 +43,10 @@ export function validResult(result: TomTomAPIResult): boolean {
 }
 
 // https://developer.tomtom.com/search-api/documentation/search-service/fuzzy-search
-async function mapsApi(config: TomTomAPIConfig, address: PartialAddress) {
+export async function mapsApi(
+  config: TomTomAPIConfig,
+  address: PartialAddress
+): Promise<TomTomAPIResponse> {
   const response: TomTomAPIResponse = await axios.get(
     `https://api.tomtom.com/search/${config.version}/search/${address}.json`,
     {
@@ -58,12 +61,14 @@ async function mapsApi(config: TomTomAPIConfig, address: PartialAddress) {
   return response;
 }
 
+export type TomTomMapsAPI = typeof mapsApi;
+
 // This function is doing the mapping from the third party API into our internal library
 // data structure to ensure our internal library code does not create a dependency
 // to the external third party library
-export function getPlaceAutocomplete(config: TomTomAPIConfig): SearchAPI {
+export function getPlaceAutocomplete(config: TomTomAPIConfig, api: TomTomMapsAPI): SearchAPI {
   return async (address: PartialAddress) => {
-    const autocomplete = await mapsApi(config, address);
+    const autocomplete = await api(config, address);
     return autocomplete.data.results.filter(validResult).map((result): AddressComponents => {
       return {
         placeId: result.id,

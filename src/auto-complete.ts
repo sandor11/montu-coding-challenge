@@ -1,5 +1,5 @@
 import { Config } from './providers/config';
-import { TomTomAPIConfig, getPlaceAutocomplete } from './third-party/maps-api';
+import { TomTomAPIConfig, getPlaceAutocomplete, mapsApi } from './third-party/maps-api';
 import {
   AddressSearch,
   addressSearch,
@@ -28,8 +28,8 @@ function configure(version: AutoCompleteVersion): AddressSearch {
       countrySet: Config.tomTomCountriesAllowed
     };
 
-    const mapsApi = getPlaceAutocomplete(tomTomConfig);
-    return addressSearch(mapsApi);
+    const tomTomApi = getPlaceAutocomplete(tomTomConfig, mapsApi);
+    return addressSearch(tomTomApi);
   } else {
     throw Error(AutoCompleteError.UNSUPPORTED_LIBRARY_VERSION);
   }
